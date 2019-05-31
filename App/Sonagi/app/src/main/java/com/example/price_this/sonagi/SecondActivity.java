@@ -98,7 +98,7 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
 
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapAdd);
         mapFragment.getMapAsync(this);
 
         toilet = (RadioButton) findViewById(R.id.radioToilet);
