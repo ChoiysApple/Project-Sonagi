@@ -6,8 +6,8 @@
     android:id = "@+id/selectionFragment">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="50dp"
 
         android:src="@drawable/toilet_color" />
@@ -19,12 +19,12 @@
         android:checked="true"
         android:shadowColor="@color/colorPrimary"
         android:text=""
-        android:layout_margin="10dp"
+        android:layout_margin="1dp"
         android:buttonTint="#008477"/>
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="0dp"
         android:src="@drawable/trashcan" />
 
@@ -33,21 +33,21 @@
         android:id = "@+id/checkTrash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="1dp"
         android:text=""
         android:checked="true"
-        android:buttonTint="#008477"/>
+        android:buttonTint="#008477" />
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/vending_machine" />
 
     <CheckBox
         android:id = "@+id/checkVending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="1dp"
         android:text=""
         android:checked="true"
         android:buttonTint="#008477"/>

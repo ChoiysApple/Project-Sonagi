@@ -461,10 +461,10 @@ public class MainActivity extends AppCompatActivity
         MarkerOptions[] newCMarkerOptions= new MarkerOptions[3];
         MarkerOptions[] newTMarkerOptions= new MarkerOptions[3];
         // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
-        if (bandingMachine) {
+      if (excistance) {
             firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
             double temp = 0.0003;
-            for (int i = 0; i < 2; i++) {
+             for (int i = 0; i < 2; i++) {
                 newBMarkerOptions[i] = new MarkerOptions();
                 newBMarkerOptions[i].position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
                 newBMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -486,7 +486,7 @@ public class MainActivity extends AppCompatActivity
             for(int i=0;i<2;i++){
                 newTMarkerOptions[i] = new MarkerOptions();
                 newTMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0002, location.getLongitude() + temp));
-                newBMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                newTMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 newTMarkerOptions[i].title("화장실");
                 newTMarkerOptions[i].snippet("여기 화장실은 깨끗해요!");
                 mGoogleMap.addMarker(newTMarkerOptions[i]);
@@ -495,17 +495,17 @@ public class MainActivity extends AppCompatActivity
             }
             newTMarkerOptions[2] = new MarkerOptions();
             newTMarkerOptions[2].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() - 0.0001));
-            newBMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            newTMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             newTMarkerOptions[2].title("화장실");
             newTMarkerOptions[2].snippet("여기 화장실은 넓어요!");
             mGoogleMap.addMarker(newTMarkerOptions[2]);
             excistance = false;
 
 
-            for(int i=0;i<2;i++){
+           for(int i=0;i<2;i++){
                 newCMarkerOptions[i] = new MarkerOptions();
                 newCMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() + temp));
-                newCMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                newCMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 newCMarkerOptions[i].title("쓰레기통");
                 newCMarkerOptions[i].snippet("작은 쓰레기통, 우리, 쓰레기 던지지 말아요.");
                 mGoogleMap.addMarker(newCMarkerOptions[i]);
@@ -514,14 +514,15 @@ public class MainActivity extends AppCompatActivity
             }
                newCMarkerOptions[2] = new MarkerOptions();
                 newCMarkerOptions[2].position(new LatLng(location.getLatitude() + temp, location.getLongitude() - temp));
-                newCMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                newCMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 newCMarkerOptions[2].title("쓰레기통");
                 newCMarkerOptions[2].snippet("큰 쓰레기통, 같이 쓰레기 던져 넣어 보아요.");
                 mGoogleMap.addMarker(newCMarkerOptions[2]);
                 excistance = false;
         }
 
-        if ((firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) >= 0.0000002 && (firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) <= 0.0000002) {
+
+        if ((firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) >= 0.0000005 && (firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) <= 0.0000005) {
             excistance=true;
         }
 
