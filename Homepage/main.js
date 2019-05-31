@@ -1898,8 +1898,8 @@
         function() {
             map.morph(app.POSITIONS.navercorp, 11, {duration: 1000});
         }, 2000);
-})();
-   };
+
+   
     app.boot = function(mapEl, panoramaEl) {
         var map = new naver.maps.Map(mapEl, {
             center: app.POSITIONS.navercorp,
