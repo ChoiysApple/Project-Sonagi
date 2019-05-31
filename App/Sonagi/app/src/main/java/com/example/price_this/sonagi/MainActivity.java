@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
+    boolean bandingMachine = true;
+    LatLng firstLocation;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -220,9 +222,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
     }
-
 
     @Override
     public void onLocationChanged(Location location) {
@@ -419,21 +419,29 @@ public class MainActivity extends AppCompatActivity
         //    Oadjust+=0.0005;
       //  }
 
-        // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
-        double temp = 0.0003;
-        for(int i=0;i<2;i++){
-            MarkerOptions newMarkerOptions = new MarkerOptions();
-            newMarkerOptions.position(new LatLng(location.getLatitude()-temp,location.getLongitude()+0.0005));
-            newMarkerOptions.title("자판기");
-            newMarkerOptions.snippet("으엑 펩시가 있어요");
-            mGoogleMap.addMarker(newMarkerOptions);
-            temp = -0.0006;
+        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000002&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000002){
+            bandingMachine=true;
         }
-        MarkerOptions newMarkerOptions = new MarkerOptions();
-        newMarkerOptions.position(new LatLng(location.getLatitude()-0.0001,location.getLongitude()+0.0001));
-        newMarkerOptions.title("자판기");
-        newMarkerOptions.snippet("무려 콜라를 팝니다.");
-        mGoogleMap.addMarker(newMarkerOptions);
+
+        // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
+        if(bandingMachine) {
+            firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            double temp = 0.0003;
+            for (int i = 0; i < 2; i++) {
+                MarkerOptions newMarkerOptions = new MarkerOptions();
+                newMarkerOptions.position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
+                newMarkerOptions.title("자판기");
+                newMarkerOptions.snippet("으엑 펩시가 있어요");
+                mGoogleMap.addMarker(newMarkerOptions);
+                temp = -0.0006;
+            }
+            MarkerOptions newMarkerOptions = new MarkerOptions();
+            newMarkerOptions.position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
+            newMarkerOptions.title("자판기");
+            newMarkerOptions.snippet("무려 콜라를 팝니다.");
+            mGoogleMap.addMarker(newMarkerOptions);
+            bandingMachine = false;
+        }
 
 
 
