@@ -1,8 +1,11 @@
 package com.example.price_this.sonagi;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
@@ -70,6 +73,7 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
+    LatLng currentArea;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -98,7 +102,7 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
 
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapAdd);
         mapFragment.getMapAsync(this);
 
         toilet = (RadioButton) findViewById(R.id.radioToilet);
@@ -110,6 +114,22 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
         if (toilet.getId() == radioId) name = "화장실";
         else if (trashCan.getId() == radioId) name = "쓰레기통";
         else if (vending.isChecked()) name = "자판기";
+
+
+        Button summit_Btn;
+        summit_Btn=findViewById(R.id.submitBtn);
+        summit_Btn.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                Intent intent = new Intent();
+                LatLng currentloca=currentArea;
+                intent.putExtra("result", currentloca);
+                setResult(RESULT_OK, intent);
+                finish();
+
+            }
+        });
     }
 
     @Override
@@ -395,6 +415,7 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
 
 
         LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        currentArea=currentLatLng;
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLatLng);
