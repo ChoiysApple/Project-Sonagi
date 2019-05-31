@@ -3,6 +3,8 @@ package com.example.price_this.sonagi;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
@@ -58,6 +60,7 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
     private GoogleMap mGoogleMap = null;
     private Marker currentMarker = null;
 
+
     private static final String TAG = "googlemap_example";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
@@ -71,6 +74,8 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
+
+
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -111,6 +116,18 @@ public class SecondActivity extends AppCompatActivity  implements OnMapReadyCall
         if (toilet.getId() == radioId) name = "화장실";
         else if (trashCan.getId() == radioId) name = "쓰레기통";
         else if (vending.isChecked()) name = "자판기";
+
+        Button subbtn;
+        subbtn=(Button) findViewById(R.id.submitBtn);
+        subbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
+
+
     }
 
     @Override
