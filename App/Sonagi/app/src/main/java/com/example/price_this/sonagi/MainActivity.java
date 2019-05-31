@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     public boolean isToilet;
     public boolean isTrashCan;
     public boolean isVending;
+    boolean excistance = true;
 
     private GoogleApiClient mGoogleApiClient = null;
     private GoogleMap mGoogleMap = null;
@@ -455,6 +456,10 @@ public class MainActivity extends AppCompatActivity
         //  }
 
 
+
+        MarkerOptions[] newBMarkerOptions= new MarkerOptions[3];
+        MarkerOptions[] newCMarkerOptions= new MarkerOptions[3];
+        MarkerOptions[] newTMarkerOptions= new MarkerOptions[3];
         // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
         if (bandingMachine) {
             firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
@@ -469,12 +474,12 @@ public class MainActivity extends AppCompatActivity
 
                 temp = -0.0006;
             }
-            newBMarkerOptions[3] = new MarkerOptions();
-            newBMarkerOptions[3].position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
-            newBMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            newBMarkerOptions[3].title("자판기");
-            newBMarkerOptions[3].snippet("무려 코카 콜라를 팝니다.");
-            mGoogleMap.addMarker(newBMarkerOptions[3]);
+            newBMarkerOptions[2] = new MarkerOptions();
+            newBMarkerOptions[2].position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
+            newBMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            newBMarkerOptions[2].title("자판기");
+            newBMarkerOptions[2].snippet("무려 코카 콜라를 팝니다.");
+            mGoogleMap.addMarker(newBMarkerOptions[2]);
             excistance = false;
 
 
@@ -488,12 +493,12 @@ public class MainActivity extends AppCompatActivity
 
                 temp = - 0.0003;
             }
-            newTMarkerOptions[3] = new MarkerOptions();
-            newTMarkerOptions[3].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() - 0.0001));
-            newBMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-            newTMarkerOptions[3].title("화장실");
-            newTMarkerOptions[3].snippet("여기 화장실은 넓어요!");
-            mGoogleMap.addMarker(newTMarkerOptions[3]);
+            newTMarkerOptions[2] = new MarkerOptions();
+            newTMarkerOptions[2].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() - 0.0001));
+            newBMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            newTMarkerOptions[2].title("화장실");
+            newTMarkerOptions[2].snippet("여기 화장실은 넓어요!");
+            mGoogleMap.addMarker(newTMarkerOptions[2]);
             excistance = false;
 
 
@@ -507,17 +512,17 @@ public class MainActivity extends AppCompatActivity
 
                 temp = 0.0004;
             }
-                newCMarkerOptions[3] = new MarkerOptions();
-                newCMarkerOptions[3].position(new LatLng(location.getLatitude() + temp, location.getLongitude() - temp));
-                newCMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                newCMarkerOptions[3].title("쓰레기통");
-                newCMarkerOptions[3].snippet("큰 쓰레기통, 같이 쓰레기 던져 넣어 보아요.");
-                mGoogleMap.addMarker(newCMarkerOptions[3]);
+               newCMarkerOptions[2] = new MarkerOptions();
+                newCMarkerOptions[2].position(new LatLng(location.getLatitude() + temp, location.getLongitude() - temp));
+                newCMarkerOptions[2].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                newCMarkerOptions[2].title("쓰레기통");
+                newCMarkerOptions[2].snippet("큰 쓰레기통, 같이 쓰레기 던져 넣어 보아요.");
+                mGoogleMap.addMarker(newCMarkerOptions[2]);
                 excistance = false;
         }
 
         if ((firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) >= 0.0000002 && (firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) <= 0.0000002) {
-            bandingMachine = true;
+            excistance=true;
         }
 
     }
