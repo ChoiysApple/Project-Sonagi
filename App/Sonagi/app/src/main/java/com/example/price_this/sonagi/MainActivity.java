@@ -69,8 +69,11 @@ public class MainActivity extends AppCompatActivity
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
-    boolean bandingMachine = true;
+    boolean excistance = true;
     LatLng firstLocation;
+    boolean bandingMachine= true;
+    boolean trashCan=true;
+    boolean toilet = true;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -421,45 +424,106 @@ public class MainActivity extends AppCompatActivity
             mGoogleMap.moveCamera(cameraUpdate);
         }
 
-        //double Ladjust=(-0.0005);
-       // double Oadjust=(-0.0005);
-
-
-      //  for(int i=0;i<3;i++){
-       //     for(int j=0;j<3;j++){
-       //         MarkerOptions newMarkerOptions = new MarkerOptions();
-        //        newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
-        //        mGoogleMap.addMarker(newMarkerOptions);
-        //        Ladjust+=0.0005;
-        //    }
-        //    Ladjust=-0.0005;
-        //    Oadjust+=0.0005;
-      //  }
+        MarkerOptions[] newBMarkerOptions = new MarkerOptions[3];
+        MarkerOptions[] newTMarkerOptions = new MarkerOptions[3];
+        MarkerOptions[] newCMarkerOptions = new MarkerOptions[3];
 
 
 
         // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
-        if(bandingMachine) {
+        if(excistance) {
             firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
             double temp = 0.0003;
+
+
             for (int i = 0; i < 2; i++) {
-                MarkerOptions newMarkerOptions = new MarkerOptions();
-                newMarkerOptions.position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
-                newMarkerOptions.title("자판기");
-                newMarkerOptions.snippet("으엑 펩시가 있어요");
-                mGoogleMap.addMarker(newMarkerOptions);
+                newBMarkerOptions[i] = new MarkerOptions();
+                newBMarkerOptions[i].position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
+                newBMarkerOptions[i].title("자판기");
+                newBMarkerOptions[i].snippet("으엑 펩시가 있어요.");
+                mGoogleMap.addMarker(newBMarkerOptions[i]);
+
                 temp = -0.0006;
             }
-            MarkerOptions newMarkerOptions = new MarkerOptions();
-            newMarkerOptions.position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
-            newMarkerOptions.title("자판기");
-            newMarkerOptions.snippet("무려 콜라를 팝니다.");
-            mGoogleMap.addMarker(newMarkerOptions);
-            bandingMachine = false;
+            newBMarkerOptions[3] = new MarkerOptions();
+            newBMarkerOptions[3].position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
+            newBMarkerOptions[3].title("자판기");
+            newBMarkerOptions[3].snippet("무려 코카 콜라를 팝니다.");
+            mGoogleMap.addMarker(newBMarkerOptions[3]);
+            excistance = false;
+
+
+            for(int i=0;i<2;i++){
+                newTMarkerOptions[i] = new MarkerOptions();
+                newTMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0002, location.getLongitude() + temp));
+                newTMarkerOptions[i].title("화장실");
+                newTMarkerOptions[i].snippet("여기 화장실은 깨끗해요!");
+                mGoogleMap.addMarker(newTMarkerOptions[i]);
+
+                temp = - 0.0003;
+            }
+            newTMarkerOptions[3] = new MarkerOptions();
+            newTMarkerOptions[3].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() - 0.0001));
+            newTMarkerOptions[3].title("화장실");
+            newTMarkerOptions[3].snippet("여기 화장실은 넓어요!");
+            mGoogleMap.addMarker(newTMarkerOptions[3]);
+            excistance = false;
+
+
+            for(int i=0;i<2;i++){
+                newCMarkerOptions[i] = new MarkerOptions();
+                newCMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() + temp));
+                newCMarkerOptions[i].title("쓰레기통");
+                newCMarkerOptions[i].snippet("작은 쓰레기통, 우리, 쓰레기 던지지 말아요.");
+                mGoogleMap.addMarker(newCMarkerOptions[i]);
+
+                temp = 0.0004;
+            }
+                newCMarkerOptions[3] = new MarkerOptions();
+                newCMarkerOptions[3].position(new LatLng(location.getLatitude() + temp, location.getLongitude() - temp));
+                newCMarkerOptions[3].title("쓰레기통");
+                newCMarkerOptions[3].snippet("큰 쓰레기통, 같이 쓰레기 던져 넣어 보아요.");
+                mGoogleMap.addMarker(newCMarkerOptions[3]);
+                excistance = false;
         }
 
-        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000002&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000002){
-            bandingMachine=true;
+        if(!bandingMachine){
+            for(int i=0;i<3;i++){
+                newBMarkerOptions[i].visible(false);
+            }
+        }else{
+            for(int i=0;i<3;i++){
+                newBMarkerOptions[i].visible(true);
+            }
+        }
+
+        if(!trashCan){
+            for(int i=0;i<3;i++){
+                newCMarkerOptions[i].visible(false);
+            }
+        }else{
+            for(int i=0;i<3;i++){
+                newCMarkerOptions[i].visible(true);
+            }
+        }
+
+        if(!toilet){
+            for(int i=0;i<3;i++){
+                newTMarkerOptions[i].visible(false);
+            }
+        }else{
+            for(int i=0;i<3;i++){
+                newTMarkerOptions[i].visible(true);
+            }
+        }
+
+        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000001&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000001){
+            excistance=true;
+            for(int i =0;i<3;i++){
+                newBMarkerOptions[i].visible(false);
+                newTMarkerOptions[i].visible(false);
+                newCMarkerOptions[i].visible(false);
+            }
         }
 
     }
