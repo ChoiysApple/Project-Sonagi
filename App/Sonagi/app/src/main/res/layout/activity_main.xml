@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="bottom">
 
 
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.MapFragment"
-        android:layout_weight="1"/>
+        class="com.google.android.gms.maps.MapFragment" />
 
     <fragment
         android:id="@+id/fragment1"
         android:name="com.example.price_this.sonagi.SelcetionFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 
-</LinearLayout>
+</FrameLayout>
