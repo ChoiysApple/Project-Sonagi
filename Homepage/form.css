@@ -1,0 +1,17 @@
+ul {
+    padding-left: 20px;
+}
+
+a{
+    color: rgb(230,230,230);
+    text-align: left;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: bold;
+    font-family: arial;
+}
+
+a:hover{
+    color: rgb(25,25,25);
+    background-color: rgb(230,230,230);
+}
