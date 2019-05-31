@@ -19,7 +19,7 @@
         <table id="head_nav">
             <tr>
                 <td>
-                    <div id="head_nav_icon">Sonagi</div>
+                    <div id="head_nav_icon"><b>Sonagi</b></div>
                 </td>
                 <td>
                     <div id="head_nav_icon" onclick="head_nav('f')">Find</div>
@@ -39,7 +39,7 @@
     </div>
     <div id="map">
         <div class="search" style> 
-            <input id="address" type="text" placeholder="검색할 주소" value="성남"/>
+            <input id="address" type="text" placeholder="검색할 주소" value="경기도 성남시 수정구 성남대로 1342"/>
             <input id="submit" type="button" value="주소 검색"/>
         </div>
     </div>
@@ -167,7 +167,7 @@ function initGeocoder() {
         searchAddressToCoordinate($('#address').val());
     });
 
-    searchAddressToCoordinate('정자동 178-1');
+    searchAddressToCoordinate('경기도 성남시 수정구 성남대로 1342');
 }
 
 function makeAddress(item) {

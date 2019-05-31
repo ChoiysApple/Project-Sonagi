@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/mapAdd"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="268dp"
+        android:layout_margin="30dp"
+        android:padding="30dp" />
+
+    <RadioGroup
+        android:id = "@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+
+        <RadioButton
+            android:id = "@+id/radioToilet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/toilet_color" />
+
+
+        <RadioButton
+            android:id = "@+id/radioTrash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/trashcan" />
+
+        <RadioButton
+            android:id = "@+id/radioVending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/vending_machine" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id = "@+id/descriptionField"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint = "화장실: 화장지, 열쇠, 층\n쓰레기통: 분리수거 여부 \n자판기: 카드가능, 제품"/>
+
+    <Button
+        android:id = "@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
