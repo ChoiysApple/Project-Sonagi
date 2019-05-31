@@ -436,9 +436,7 @@ public class MainActivity extends AppCompatActivity
         //    Oadjust+=0.0005;
       //  }
 
-        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000002&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000002){
-            bandingMachine=true;
-        }
+
 
         // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
         if(bandingMachine) {
@@ -460,7 +458,9 @@ public class MainActivity extends AppCompatActivity
             bandingMachine = false;
         }
 
-
+        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000002&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000002){
+            bandingMachine=true;
+        }
 
     }
 
