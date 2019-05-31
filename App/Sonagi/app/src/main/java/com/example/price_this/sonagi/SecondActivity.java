@@ -3,6 +3,7 @@ package com.example.price_this.sonagi;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
