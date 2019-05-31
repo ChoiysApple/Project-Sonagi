@@ -3,6 +3,7 @@ package com.example.price_this.sonagi;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,12 +15,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -92,11 +96,32 @@ public class MainActivity extends AppCompatActivity
                 .addApi(LocationServices.API)
                 .build();
 
-
+        final Context context;
+        context=this;
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        FloatingActionButton fab;
+        fab=findViewById(R.id.fab);
+        fab.setOnClickListener(new FloatingActionButton.OnClickListener(){
+            @Override
+                    public void onClick(View view){
+
+                Intent regiIntent= new Intent(context, SecondActivity.class);
+                startActivity(regiIntent);
+            }
+
+        });
+
+
+
+
+
+
     }
+
+
 
 
     @Override
