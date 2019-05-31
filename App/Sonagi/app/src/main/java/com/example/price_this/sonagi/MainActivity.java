@@ -111,11 +111,26 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view){
 
                 Intent regiIntent= new Intent(context, SecondActivity.class);
-                startActivity(regiIntent);
+                startActivityForResult(regiIntent,200);
+            }
+
+
+            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+if(requestCode==RESULT_OK){
+    if(requestCode==200){
+        Toast.makeText(MainActivity.this,"바보"+data.toString(),Toast.LENGTH_LONG).show();
+    }
+}
+
             }
 
         });
+
+
     }
+
+
+
 
 
     @Override
