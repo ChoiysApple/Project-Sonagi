@@ -1,304 +1,415 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Sonagi</title>
-    <script  src="jquery-1.9.1.js"></script>
+    <script src="jquery-1.9.1.js"></script>
     <script type="text/javascript" src="base.js"></script>
     <script type="text/javascript" src="highlight.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=adkuitdhp5&amp;submodules=panorama,geocoder,drawing,visualization"></script>
+    <script type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=adkuitdhp5&amp;submodules=panorama,geocoder,drawing,visualization"></script>
     <script src="main.js"></script>
     <script src="index.js"></script>
+    <script>
 
+        function viewregister(i, ii) {
+            if (ii != 2) {
+                document.getElementById('service1').style.visibility = "hidden";
+                if (ii == 0) {
+                    document.getElementById('service' + i).style.visibility = "visible";
+                }
+            }
+
+
+
+
+        }
+
+
+
+    </script>
 </head>
+
 <body>
+    <!--
     <div id="menu">
-        <table id="head_nav">
-            <tr>
-                <td>
-                    <a id="head_nav_icon" href="index.html"><b>Sonagi</b></a>
-                </td>
-                <td>
-                    <a id="head_nav_icon" href="register.html">Register</a>
-                </td>
-                <td>
-                    <a id="head_nav_icon" href="credit.html">Credit</a>
-                </td>
-            </tr>
-    
-      
-        </table>
-      
-    
-      
-      
-        
+        <table>
+        <tr id="head_nav">
+            <td><a id="head_nav_icon" href="index.html"><b>Sonagi</b></a></td>
+
+            
+
+            <td><a id="head_nav_icon">Register</a>
+            <ul id="register-menu">
+                <li><a id="regi_children" onmouseover="registeringToilet()">Toilet</a></li>
+                <li><a id="regi_children" onmouseover="registeringVendingMachine()">Vending Manchine</a></li>
+                <li><a id="regi_children" onmouseover="registeringTrashBin()">Trash Bin</a></li>
+            </ul>
+        </td>
+
+            <td><a id="head_nav_icon" href="credit.html">Credit</a></td>
+
+
+
+        </tr>
+    </table>
     </div>
+
+-->
+    <!--
+    <div id="box">
+        <ul>
+            <li><a>홈</a></li>
+            <li><a>레지</a> </li>
+            <ul>                
+                <li><a>쓰레기레지</a></li>
+                <li><a>화장레지</a></li>
+                <li><a> 자판레지</a></li>
+            </ul>
+            <li><a>크레딧</a></li>
+        </ul>
+    </div>
+-->
+    <div id="menu">
+        <table>
+            <tr id="head_nav">
+                <td><a id="head_nav_icon" href="index.html"><b>Sonagi</b></a></td>
+
+
+
+                <td><a id="head_nav_icon" onclick="registeringToilet()">Toilet</a></td>
+                <td><a id="head_nav_icon" onclick="registeringVendingMachine()">Vending Manchine</a></td>
+                    <td><a id="head_nav_icon" onclick="registeringTrashBin()">Trash Bin</a></td>
+
+                </td>
+
+                <td><a id="head_nav_icon" href="credit.html">Credit</a></td>
+
+
+
+            </tr>
+        </table>
+    </div>
+
+
+
     <div id="map">
-        <div class="search" style> 
-            <input id="address" type="text" placeholder="검색할 주소" value="경기도 성남시 수정구 성남대로 1342"/>
-            <input id="submit" type="button" value="주소 검색"/>
+        <div class="search" style>
+            <input id="address" type="text" placeholder="검색할 주소" value="경기도 성남시 수정구 성남대로 1342" />
+            <input id="submit" type="button" value="주소 검색" />
         </div>
     </div>
 
     <script>
-    
-    var HOME_PATH = window.HOME_PATH || '.';
 
-    var map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(37.4525289, 127.1315312),
-        zoom: 10,
-        mapTypeControl: true
-    });
-    
-  
-var marker1 = new Array();
-var marker2 = new Array();
-var marker3 = new Array();
-var a = new Array();
-var b = new Array();
-var c = new Array();
-var d = new Array();
-var e = new Array();
-var f = new Array();
+        var HOME_PATH = window.HOME_PATH || '.';
+
+        var map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(37.4525289, 127.1315312),
+            zoom: 10,
+            mapTypeControl: true
+        });
 
 
-
-a[0]=37.449195;
-a[1]=37.451067;
-a[2]=37.451936;
-a[3]=37.322033;
-a[4]=37.448718;
-
-
-b[0]=127.127502;
-b[1]=127.129924;
-b[2]=127.127137;
-b[3]=127.123773;
-b[4]=127.126683;
-
-c[0]=37.449478;
-c[1]=37.450921;
-c[2]=37.450921;
-c[3]=37.450864;
-c[4]=37.321594;
-
-d[0]=127.127212;
-d[1]=127.127141;
-d[2]=127.129746;
-d[3]=127.128074;
-d[4]=127.123805;
-
-e[0]=37.448627;
-e[1]=37.450921;
-e[2]=37.450121;
-e[3]=37.450264;
-e[4]=37.321494;
-
-f[0]=127.126760;
-f[1]=127.123141;
-f[2]=127.124746;
-f[3]=127.125074;
-f[4]=127.122805;
-
-var text = [
-    "1층에 있습니다.",
-    "2층에 있습니다.",
-    "3층에 있습니다.",
-    "4층에 있습니다.",
-    "5층에 있습니다."
-];
+        var marker1 = new Array();
+        var marker2 = new Array();
+        var marker3 = new Array();
+        var a = new Array();
+        var b = new Array();
+        var c = new Array();
+        var d = new Array();
+        var e = new Array();
+        var f = new Array();
 
 
-var markers = [],
-    infoWindows = [];
 
-    var infoWindow = new naver.maps.InfoWindow({
-    anchorSkew: true
-    });
+        a[0] = 37.449195;
+        a[1] = 37.451067;
+        a[2] = 37.451936;
+        a[3] = 37.322033;
+        a[4] = 37.448718;
+        a[5] = 34.778735;
+        a[6] = 34.778759;
 
-for(var i=0;i<5;i++){
-    marker1[i] = new naver.maps.Marker({
-    position: new naver.maps.LatLng(a[i], b[i]),
-    map: map,
-    icon: {
-        url: HOME_PATH +'/imgresource/mini_icon/test_icon_toilet.png',
-        size: new naver.maps.Size(50, 52),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(25, 26)
-    },
-        zIndex: 100
-    });
-}
-for(var i=0;i<5;i++){
-    marker2[i] = new naver.maps.Marker({
-    position: new naver.maps.LatLng(c[i], d[i]),
-    map: map,
-    icon: {
-        url: HOME_PATH +'/imgresource/mini_icon/test_icon_vending.png',
-        size: new naver.maps.Size(50, 52),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(25, 26)
-    },
-        zIndex: 100
-    });
-}
+        b[0] = 127.127502;
+        b[1] = 127.129924;
+        b[2] = 127.127137;
+        b[3] = 127.123773;
+        b[4] = 127.126683;
+        b[5] = 128.599997;
+        b[6] = 128.600105;
 
-for(var i=0;i<5;i++){
-    marker3[i] = new naver.maps.Marker({
-    position: new naver.maps.LatLng(e[i], f[i]),
-    map: map,
-    icon: {
-        url: HOME_PATH +'/imgresource/mini_icon/test_icon.png',
-        size: new naver.maps.Size(50, 52),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(25, 26)
-    },
-        zIndex: 100
-    });
-}
+        c[0] = 37.449478;
+        c[1] = 37.450921;
+        c[2] = 37.450921;
+        c[3] = 37.450864;
+        c[4] = 37.321594;
 
+        d[0] = 127.127212;
+        d[1] = 127.127141;
+        d[2] = 127.129746;
+        d[3] = 127.128074;
+        d[4] = 127.123805;
 
-map.setCursor('pointer');
-function searchCoordinateToAddress(latlng) {
-    infoWindow.close();
-    naver.maps.Service.reverseGeocode({
-        coords: latlng,
-        orders: [
-            naver.maps.Service.OrderType.ADDR,
-            naver.maps.Service.OrderType.ROAD_ADDR
-        ].join(',')
-    }, function(status, response) {
-        if (status === naver.maps.Service.Status.ERROR) {
-            return alert('Something Wrong!');
+        e[0] = 37.448627;
+        e[1] = 37.450921;
+        e[2] = 37.450121;
+        e[3] = 37.450264;
+        e[4] = 37.321494;
+
+        f[0] = 127.126760;
+        f[1] = 127.123141;
+        f[2] = 127.124746;
+        f[3] = 127.125074;
+        f[4] = 127.122805;
+
+        var text = [
+            "1층에 있습니다.",
+            "2층에 있습니다.",
+            "3층에 있습니다.",
+            "4층에 있습니다.",
+            "5층에 있습니다."
+        ];
+        var coordPoint = new naver.maps.Point;
+
+        var markers = [],
+            infoWindows = [];
+
+        var infoWindow = new naver.maps.InfoWindow({
+            anchorSkew: true
+        });
+
+        for (var i = 0; i < a.length; i++) {
+            marker1[i] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(a[i], b[i]),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon_toilet.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
         }
-        var items = response.v2.results,
-            address = '',
-            htmlAddresses = [];
-        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
-            item = items[i];
-            address = makeAddress(item) || '';
-            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-            htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
+        for (var i = 0; i < c.length; i++) {
+            marker2[i] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(c[i], d[i]),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon_vending.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
         }
-        infoWindow.setContent([
-            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
-            htmlAddresses.join('<br />'),
-            '</div>'
-        ].join('\n'));
-        infoWindow.open(map, latlng);
-    });
-}
-function searchAddressToCoordinate(address) {
-    naver.maps.Service.geocode({
-        query: address
-    }, function(status, response) {
-        if (status === naver.maps.Service.Status.ERROR) {
-            return alert('Something Wrong!');
+
+        for (var i = 0; i < e.length; i++) {
+            marker3[i] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(e[i], f[i]),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
         }
-        if (response.v2.meta.totalCount === 0) {
-            return alert('totalCount' + response.v2.meta.totalCount);
+
+
+        map.setCursor('pointer');
+        function searchCoordinateToAddress(latlng) {
+            infoWindow.close();
+            naver.maps.Service.reverseGeocode({
+                coords: latlng,
+                orders: [
+                    naver.maps.Service.OrderType.ADDR,
+                    naver.maps.Service.OrderType.ROAD_ADDR
+                ].join(',')
+            }, function (status, response) {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    return alert('Something Wrong!');
+                }
+                var items = response.v2.results,
+                    address = '',
+                    htmlAddresses = [];
+                for (var i = 0, ii = items.length, item, addrType; i < ii; i++) {
+                    item = items[i];
+                    address = makeAddress(item) || '';
+                    addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
+                    htmlAddresses.push((i + 1) + '. ' + addrType + ' ' + address);
+                }
+                infoWindow.setContent([
+                    '<div style="padding:10px;min-width:200px;line-height:150%;">',
+                    '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+                    htmlAddresses.join('<br />'),
+                    '</div>'
+                ].join('\n'));
+                infoWindow.open(map, latlng);
+            });
         }
-        var htmlAddresses = [],
-            item = response.v2.addresses[0],
-            point = new naver.maps.Point(item.x, item.y);
-        if (item.roadAddress) {
-            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+        function searchAddressToCoordinate(address) {
+            naver.maps.Service.geocode({
+                query: address
+            }, function (status, response) {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    return alert('Something Wrong!');
+                }
+                if (response.v2.meta.totalCount === 0) {
+                    return alert('totalCount' + response.v2.meta.totalCount);
+                }
+                var htmlAddresses = [],
+                    item = response.v2.addresses[0],
+                    point = new naver.maps.Point(item.x, item.y);
+                coordPoint = point;
+                if (item.roadAddress) {
+                    htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+                }
+                if (item.jibunAddress) {
+                    htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+                }
+                if (item.englishAddress) {
+                    htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+                }
+                infoWindow.setContent([
+                    '<div style="padding:10px;min-width:200px;line-height:150%;">',
+                    '<h4 style="margin-top:5px;">검색 주소 : ' + address + '</h4><br />',
+                    htmlAddresses.join('<br />'),
+                    '</div>'
+                ].join('\n'));
+                map.setCenter(point);
+                infoWindow.open(map, point);
+            });
         }
-        if (item.jibunAddress) {
-            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+        function initGeocoder() {
+
+            map.addListener('click', function (e) {
+                searchCoordinateToAddress(coordPoint = e.coord);
+            });
+            $('#address').on('keydown', function (e) {
+                var keyCode = e.which;
+                if (keyCode === 13) { // Enter Key
+                    searchAddressToCoordinate($('#address').val());
+                }
+            });
+            $('#submit').on('click', function (e) {
+                e.preventDefault();
+                searchAddressToCoordinate($('#address').val());
+            });
+            searchAddressToCoordinate('경기도 성남시 수정구 성남대로 1342');
         }
-        if (item.englishAddress) {
-            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-        }
-        infoWindow.setContent([
-            '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
-            htmlAddresses.join('<br />'),
-            '</div>'
-        ].join('\n'));
-        map.setCenter(point);
-        infoWindow.open(map, point);
-    });
-}
-function initGeocoder() {
-    map.addListener('click', function(e) {
-        searchCoordinateToAddress(e.coord);
-    });
-    $('#address').on('keydown', function(e) {
-        var keyCode = e.which;
-        if (keyCode === 13) { // Enter Key
-            searchAddressToCoordinate($('#address').val());
-        }
-    });
-    $('#submit').on('click', function(e) {
-        e.preventDefault();
-        searchAddressToCoordinate($('#address').val());
-    });
-    searchAddressToCoordinate('경기도 성남시 수정구 성남대로 1342');
-}
-function makeAddress(item) {
-    if (!item) {
-        return;
-    }
-    var name = item.name,
-        region = item.region,
-        land = item.land,
-        isRoadAddress = name === 'roadaddr';
-    var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
-    if (hasArea(region.area1)) {
-        sido = region.area1.name;
-    }
-    if (hasArea(region.area2)) {
-        sigugun = region.area2.name;
-    }
-    if (hasArea(region.area3)) {
-        dongmyun = region.area3.name;
-    }
-    if (hasArea(region.area4)) {
-        ri = region.area4.name;
-    }
-    if (land) {
-        if (hasData(land.number1)) {
-            if (hasData(land.type) && land.type === '2') {
-                rest += '산';
+        function makeAddress(item) {
+            if (!item) {
+                return;
             }
-            rest += land.number1;
-            if (hasData(land.number2)) {
-                rest += ('-' + land.number2);
+            var name = item.name,
+                region = item.region,
+                land = item.land,
+                isRoadAddress = name === 'roadaddr';
+            var sido = '', sigugun = '', dongmyun = '', ri = '', rest = '';
+            if (hasArea(region.area1)) {
+                sido = region.area1.name;
             }
+            if (hasArea(region.area2)) {
+                sigugun = region.area2.name;
+            }
+            if (hasArea(region.area3)) {
+                dongmyun = region.area3.name;
+            }
+            if (hasArea(region.area4)) {
+                ri = region.area4.name;
+            }
+            if (land) {
+                if (hasData(land.number1)) {
+                    if (hasData(land.type) && land.type === '2') {
+                        rest += '산';
+                    }
+                    rest += land.number1;
+                    if (hasData(land.number2)) {
+                        rest += ('-' + land.number2);
+                    }
+                }
+                if (isRoadAddress === true) {
+                    if (checkLastString(dongmyun, '면')) {
+                        ri = land.name;
+                    } else {
+                        dongmyun = land.name;
+                        ri = '';
+                    }
+                    if (hasAddition(land.addition0)) {
+                        rest += ' ' + land.addition0.value;
+                    }
+                }
+            }
+            return [sido, sigugun, dongmyun, ri, rest].join(' ');
         }
-        if (isRoadAddress === true) {
-            if (checkLastString(dongmyun, '면')) {
-                ri = land.name;
-            } else {
-                dongmyun = land.name;
-                ri = '';
-            }
-            if (hasAddition(land.addition0)) {
-                rest += ' ' + land.addition0.value;
-            }
+        function hasArea(area) {
+            return !!(area && area.name && area.name !== '');
         }
-    }
-    return [sido, sigugun, dongmyun, ri, rest].join(' ');
-}
-function hasArea(area) {
-    return !!(area && area.name && area.name !== '');
-}
-function hasData(data) {
-    return !!(data && data !== '');
-}
-function checkLastString (word, lastString) {
-    return new RegExp(lastString + '$').test(word);
-}
-function hasAddition (addition) {
-    return !!(addition && addition.value);
-}
-naver.maps.onJSContentLoaded = initGeocoder;
+        function hasData(data) {
+            return !!(data && data !== '');
+        }
+        function checkLastString(word, lastString) {
+            return new RegExp(lastString + '$').test(word);
+        }
+        function hasAddition(addition) {
+            return !!(addition && addition.value);
+        }
+
+        function registeringToilet() {
+            marker1[a.length] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(coordPoint),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon_toilet.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
+        }
+
+        function registeringVendingMachine() {
+            marker1[c.length] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(coordPoint),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon_vending.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
+        }
+
+        function registeringTrashBin() {
+            marker1[e.length] = new naver.maps.Marker({
+                position: new naver.maps.LatLng(coordPoint),
+                map: map,
+                icon: {
+                    url: HOME_PATH + '/imgresource/mini_icon/test_icon.png',
+                    size: new naver.maps.Size(50, 52),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                },
+                zIndex: 100
+            });
+        }
+
+        naver.maps.onJSContentLoaded = initGeocoder;
+
+
 
 
 
@@ -425,4 +536,5 @@ naver.maps.onJSContentLoaded = initGeocoder;
 // }
     </script>
 </body>
+
 </html>

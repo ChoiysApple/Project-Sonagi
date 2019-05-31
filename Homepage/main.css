@@ -25,11 +25,9 @@ hr {
     top:20px;
     left:20px;
 
-
-
-
-
 }
+
+
 .search #address{
     width:150px;
     height:20px;
@@ -49,7 +47,39 @@ hr {
     cursor: pointer;
     box-sizing:content-box;
 }
+#box{
+    margin:0px;
+    padding:0px;
+}
+#box ul{
+    list-style:none;
+}
+#box ul li{
+    background-color:black;
+    border:1px solid #fff;
+    width:100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    float: left;
+    position: relative;
 
+}
+#box ul li a {
+    text-decoration: none;
+    color:white;
+    display: block;
+}
+#box ul li a:hover{
+    background-color: #e8491d;
+}
+#box ul ul{
+    display:none;
+    position: absolute;
+}
+#box ul li:hover>ul{
+    display: block;
+}
 
 #menu
 {
@@ -58,11 +88,13 @@ hr {
     padding: 0;
 }
 
-#head_nav
+#head_nav > li :hover #register-menu
 {
     margin: 0;
     border: 0;
     padding: 0;
+    opacity: 1;
+    visibility: visible;
     
 }
 
@@ -77,6 +109,23 @@ hr {
     margin-right: 12px;
 }
 
+#register-menu
+{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden; 
+    background: rgb(25,25,25);
+}
+
+#register-menu > li
+{
+    background: rgb(25,25,25);
+}
+#register-menu > li > a
+{
+    text-decoration: none;
+    background: rgb(25,25,25);
+}
 #head_nav_icon
 {
     height: 20px;
@@ -89,7 +138,13 @@ hr {
     color: rgb(230,230,230);
     background-color:  rgb(25,25,25);
     text-decoration: none;
+    
+        
 }
+#regi_children{
+    visibility: hidden;
+}
+
 
 #head_nav_icon:hover
 {
@@ -104,12 +159,22 @@ hr {
     color: rgb(25,25,25);
     background-color: rgb(230,230,230);
     text-decoration: none;
+
+
 }
+#head_nav_icon ul{
+    display : none;
+    }
+
+#head_nav_icon ul li:hover> ul {
+    display : block;
+    }
+    
 
 #map 
 {
     width: 100%;
-    height: 91%;
+    height: 96%;
     margin: 0;
     border: 0;
     padding: 0;
