@@ -44,7 +44,7 @@
         android:src="@drawable/vending_machine" />
 
     <CheckBox
-        android:id = "@+id/checkBending"
+        android:id = "@+id/checkVending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

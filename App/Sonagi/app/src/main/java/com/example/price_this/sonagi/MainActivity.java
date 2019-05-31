@@ -1,11 +1,11 @@
 package com.example.price_this.sonagi;
 
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,8 +22,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -41,6 +44,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -51,6 +58,11 @@ public class MainActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+
+
+    public boolean isToilet;
+    public boolean isTrashCan;
+    public boolean isVending;
 
     private GoogleApiClient mGoogleApiClient = null;
     private GoogleMap mGoogleMap = null;
@@ -69,21 +81,25 @@ public class MainActivity extends AppCompatActivity
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
-    boolean excistance = true;
+    boolean bandingMachine = true;
     LatLng firstLocation;
-    boolean bandingMachine= true;
-    boolean trashCan=true;
-    boolean toilet = true;
+
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
             .setInterval(UPDATE_INTERVAL_MS)
             .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
+    protected void onDestroy(){
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -102,43 +118,28 @@ public class MainActivity extends AppCompatActivity
 
 
         final Context context;
-        context=this;
+        context = this;
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         FloatingActionButton fab;
-        fab=findViewById(R.id.fab);
-        fab.setOnClickListener(new FloatingActionButton.OnClickListener(){
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                Intent regiIntent= new Intent(context, SecondActivity.class);
-                startActivityForResult(regiIntent,200);
-            }
-
-
-            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-if(requestCode==RESULT_OK){
-    if(requestCode==200){
-        Toast.makeText(MainActivity.this,"바보"+data.toString(),Toast.LENGTH_LONG).show();
-    }
-}
-
+                Intent regiIntent = new Intent(context, SecondActivity.class);
+                startActivity(regiIntent);
             }
 
         });
 
-
     }
-
-
-
 
 
     @Override
     public void onResume() {
-
         super.onResume();
 
         if (mGoogleApiClient.isConnected()) {
@@ -166,7 +167,7 @@ if(requestCode==RESULT_OK){
 
             Log.d(TAG, "startLocationUpdates : call showDialogForLocationServiceSetting");
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -187,14 +188,12 @@ if(requestCode==RESULT_OK){
     }
 
 
-
     private void stopLocationUpdates() {
 
-        Log.d(TAG,"stopLocationUpdates : LocationServices.FusedLocationApi.removeLocationUpdates");
+        Log.d(TAG, "stopLocationUpdates : LocationServices.FusedLocationApi.removeLocationUpdates");
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         mRequestingLocationUpdates = false;
     }
-
 
 
     @Override
@@ -212,12 +211,12 @@ if(requestCode==RESULT_OK){
         //mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
+        mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
             @Override
             public boolean onMyLocationButtonClick() {
 
-                Log.d( TAG, "onMyLocationButtonClick : 위치에 따른 카메라 이동 활성화");
+                Log.d(TAG, "onMyLocationButtonClick : 위치에 따른 카메라 이동 활성화");
                 mMoveMapByAPI = true;
                 return true;
             }
@@ -227,7 +226,7 @@ if(requestCode==RESULT_OK){
             @Override
             public void onMapClick(LatLng latLng) {
 
-                Log.d( TAG, "onMapClick :");
+                Log.d(TAG, "onMapClick :");
             }
         });
 
@@ -236,7 +235,7 @@ if(requestCode==RESULT_OK){
             @Override
             public void onCameraMoveStarted(int i) {
 
-                if (mMoveMapByUser == true && mRequestingLocationUpdates){
+                if (mMoveMapByUser == true && mRequestingLocationUpdates) {
 
                     Log.d(TAG, "onCameraMove : 위치에 따른 카메라 이동 비활성화");
                     mMoveMapByAPI = false;
@@ -263,7 +262,7 @@ if(requestCode==RESULT_OK){
     public void onLocationChanged(Location location) {
 
         currentPosition
-                = new LatLng( location.getLatitude(), location.getLongitude());
+                = new LatLng(location.getLatitude(), location.getLongitude());
 
 
         Log.d(TAG, "onLocationChanged : ");
@@ -282,7 +281,7 @@ if(requestCode==RESULT_OK){
     @Override
     protected void onStart() {
 
-        if(mGoogleApiClient != null && mGoogleApiClient.isConnected() == false){
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected() == false) {
 
             Log.d(TAG, "onStart: mGoogleApiClient connect");
             mGoogleApiClient.connect();
@@ -300,7 +299,7 @@ if(requestCode==RESULT_OK){
             stopLocationUpdates();
         }
 
-        if ( mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected()) {
 
             Log.d(TAG, "onStop : mGoogleApiClient disconnect");
             mGoogleApiClient.disconnect();
@@ -314,7 +313,7 @@ if(requestCode==RESULT_OK){
     public void onConnected(Bundle connectionHint) {
 
 
-        if ( mRequestingLocationUpdates == false ) {
+        if (mRequestingLocationUpdates == false) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -335,7 +334,7 @@ if(requestCode==RESULT_OK){
                     mGoogleMap.setMyLocationEnabled(true);
                 }
 
-            }else{
+            } else {
 
                 Log.d(TAG, "onConnected : call startLocationUpdates");
                 startLocationUpdates();
@@ -410,7 +409,8 @@ if(requestCode==RESULT_OK){
     }
 
 
-    public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
+    public void setCurrentLocation(Location location, String markerTitle, String
+            markerSnippet) {
 
         mMoveMapByUser = false;
 
@@ -430,27 +430,35 @@ if(requestCode==RESULT_OK){
         //currentMarker = mGoogleMap.addMarker(markerOptions);
 
 
-        if ( mMoveMapByAPI ) {
+        if (mMoveMapByAPI) {
 
-            Log.d( TAG, "setCurrentLocation :  mGoogleMap moveCamera "
-                    + location.getLatitude() + " " + location.getLongitude() ) ;
+            Log.d(TAG, "setCurrentLocation :  mGoogleMap moveCamera "
+                    + location.getLatitude() + " " + location.getLongitude());
             // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 15);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
             mGoogleMap.moveCamera(cameraUpdate);
         }
 
-        MarkerOptions[] newBMarkerOptions = new MarkerOptions[3];
-        MarkerOptions[] newTMarkerOptions = new MarkerOptions[3];
-        MarkerOptions[] newCMarkerOptions = new MarkerOptions[3];
+        //double Ladjust=(-0.0005);
+        // double Oadjust=(-0.0005);
 
+
+        //  for(int i=0;i<3;i++){
+        //     for(int j=0;j<3;j++){
+        //         MarkerOptions newMarkerOptions = new MarkerOptions();
+        //        newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
+        //        mGoogleMap.addMarker(newMarkerOptions);
+        //        Ladjust+=0.0005;
+        //    }
+        //    Ladjust=-0.0005;
+        //    Oadjust+=0.0005;
+        //  }
 
 
         // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
-        if(excistance) {
+        if (bandingMachine) {
             firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
             double temp = 0.0003;
-
-
             for (int i = 0; i < 2; i++) {
                 newBMarkerOptions[i] = new MarkerOptions();
                 newBMarkerOptions[i].position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
@@ -508,43 +516,8 @@ if(requestCode==RESULT_OK){
                 excistance = false;
         }
 
-        if(!bandingMachine){
-            for(int i=0;i<3;i++){
-                newBMarkerOptions[i].visible(false);
-            }
-        }else{
-            for(int i=0;i<3;i++){
-                newBMarkerOptions[i].visible(true);
-            }
-        }
-
-        if(!trashCan){
-            for(int i=0;i<3;i++){
-                newCMarkerOptions[i].visible(false);
-            }
-        }else{
-            for(int i=0;i<3;i++){
-                newCMarkerOptions[i].visible(true);
-            }
-        }
-
-        if(!toilet){
-            for(int i=0;i<3;i++){
-                newTMarkerOptions[i].visible(false);
-            }
-        }else{
-            for(int i=0;i<3;i++){
-                newTMarkerOptions[i].visible(true);
-            }
-        }
-
-        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000001&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000001){
-            excistance=true;
-            for(int i =0;i<3;i++){
-                newBMarkerOptions[i].visible(false);
-                newTMarkerOptions[i].visible(false);
-                newCMarkerOptions[i].visible(false);
-            }
+        if ((firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) >= 0.0000002 && (firstLocation.latitude * currentLatLng.latitude) - (firstLocation.longitude * currentLatLng.longitude) <= 0.0000002) {
+            bandingMachine = true;
         }
 
     }
@@ -599,7 +572,7 @@ if(requestCode==RESULT_OK){
 
             Log.d(TAG, "checkPermissions : 퍼미션 가지고 있음");
 
-            if ( mGoogleApiClient.isConnected() == false) {
+            if (mGoogleApiClient.isConnected() == false) {
 
                 Log.d(TAG, "checkPermissions : 퍼미션 가지고 있음");
                 mGoogleApiClient.connect();
@@ -620,12 +593,11 @@ if(requestCode==RESULT_OK){
             if (permissionAccepted) {
 
 
-                if ( mGoogleApiClient.isConnected() == false) {
+                if (mGoogleApiClient.isConnected() == false) {
 
                     Log.d(TAG, "onRequestPermissionsResult : mGoogleApiClient connect");
                     mGoogleApiClient.connect();
                 }
-
 
 
             } else {
@@ -727,9 +699,9 @@ if(requestCode==RESULT_OK){
                         Log.d(TAG, "onActivityResult : 퍼미션 가지고 있음");
 
 
-                        if ( mGoogleApiClient.isConnected() == false ) {
+                        if (mGoogleApiClient.isConnected() == false) {
 
-                            Log.d( TAG, "onActivityResult : mGoogleApiClient connect ");
+                            Log.d(TAG, "onActivityResult : mGoogleApiClient connect ");
                             mGoogleApiClient.connect();
                         }
                         return;
@@ -740,8 +712,4 @@ if(requestCode==RESULT_OK){
         }
     }
 
-
 }
-
-
-
