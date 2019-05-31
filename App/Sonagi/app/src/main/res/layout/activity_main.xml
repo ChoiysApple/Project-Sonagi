@@ -19,8 +19,7 @@
         android:id="@+id/fragment1"
         android:name="com.example.price_this.sonagi.SelcetionFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
+        android:layout_height="wrap_content" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -28,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:buttonTint="#008477"
+        app:backgroundTint="#008477"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 

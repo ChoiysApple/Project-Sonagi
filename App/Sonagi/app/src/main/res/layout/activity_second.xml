@@ -20,21 +20,41 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
+
         <RadioButton
             android:id = "@+id/radioToilet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toilet"/>
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/toilet_color" />
+
+
         <RadioButton
             android:id = "@+id/radioTrash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trash Can"/>
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/trashcan" />
+
         <RadioButton
             android:id = "@+id/radioVending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toilet"/>
+            android:text=""/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/vending_machine" />
 
     </RadioGroup>
 
