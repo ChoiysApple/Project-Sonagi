@@ -454,6 +454,7 @@ if(requestCode==RESULT_OK){
             for (int i = 0; i < 2; i++) {
                 newBMarkerOptions[i] = new MarkerOptions();
                 newBMarkerOptions[i].position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
+                newBMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 newBMarkerOptions[i].title("자판기");
                 newBMarkerOptions[i].snippet("으엑 펩시가 있어요.");
                 mGoogleMap.addMarker(newBMarkerOptions[i]);
@@ -462,6 +463,7 @@ if(requestCode==RESULT_OK){
             }
             newBMarkerOptions[3] = new MarkerOptions();
             newBMarkerOptions[3].position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
+            newBMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             newBMarkerOptions[3].title("자판기");
             newBMarkerOptions[3].snippet("무려 코카 콜라를 팝니다.");
             mGoogleMap.addMarker(newBMarkerOptions[3]);
@@ -471,6 +473,7 @@ if(requestCode==RESULT_OK){
             for(int i=0;i<2;i++){
                 newTMarkerOptions[i] = new MarkerOptions();
                 newTMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0002, location.getLongitude() + temp));
+                newBMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 newTMarkerOptions[i].title("화장실");
                 newTMarkerOptions[i].snippet("여기 화장실은 깨끗해요!");
                 mGoogleMap.addMarker(newTMarkerOptions[i]);
@@ -479,6 +482,7 @@ if(requestCode==RESULT_OK){
             }
             newTMarkerOptions[3] = new MarkerOptions();
             newTMarkerOptions[3].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() - 0.0001));
+            newBMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             newTMarkerOptions[3].title("화장실");
             newTMarkerOptions[3].snippet("여기 화장실은 넓어요!");
             mGoogleMap.addMarker(newTMarkerOptions[3]);
@@ -488,6 +492,7 @@ if(requestCode==RESULT_OK){
             for(int i=0;i<2;i++){
                 newCMarkerOptions[i] = new MarkerOptions();
                 newCMarkerOptions[i].position(new LatLng(location.getLatitude() + 0.0001, location.getLongitude() + temp));
+                newCMarkerOptions[i].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 newCMarkerOptions[i].title("쓰레기통");
                 newCMarkerOptions[i].snippet("작은 쓰레기통, 우리, 쓰레기 던지지 말아요.");
                 mGoogleMap.addMarker(newCMarkerOptions[i]);
@@ -496,6 +501,7 @@ if(requestCode==RESULT_OK){
             }
                 newCMarkerOptions[3] = new MarkerOptions();
                 newCMarkerOptions[3].position(new LatLng(location.getLatitude() + temp, location.getLongitude() - temp));
+                newCMarkerOptions[3].icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 newCMarkerOptions[3].title("쓰레기통");
                 newCMarkerOptions[3].snippet("큰 쓰레기통, 같이 쓰레기 던져 넣어 보아요.");
                 mGoogleMap.addMarker(newCMarkerOptions[3]);
