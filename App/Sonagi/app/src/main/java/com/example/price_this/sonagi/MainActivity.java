@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity
         markerOptions.draggable(true);
 
 
-        currentMarker = mGoogleMap.addMarker(markerOptions);
+        //currentMarker = mGoogleMap.addMarker(markerOptions);
 
 
         if ( mMoveMapByAPI ) {
@@ -429,20 +429,37 @@ public class MainActivity extends AppCompatActivity
             mGoogleMap.moveCamera(cameraUpdate);
         }
 
-        double Ladjust=(-0.0005);
-        double Oadjust=(-0.0005);
+        //double Ladjust=(-0.0005);
+       // double Oadjust=(-0.0005);
 
 
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                MarkerOptions newMarkerOptions = new MarkerOptions();
-                newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
-                mGoogleMap.addMarker(newMarkerOptions);
-                Ladjust+=0.0005;
-            }
-            Ladjust=-0.0005;
-            Oadjust+=0.0005;
+      //  for(int i=0;i<3;i++){
+       //     for(int j=0;j<3;j++){
+       //         MarkerOptions newMarkerOptions = new MarkerOptions();
+        //        newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
+        //        mGoogleMap.addMarker(newMarkerOptions);
+        //        Ladjust+=0.0005;
+        //    }
+        //    Ladjust=-0.0005;
+        //    Oadjust+=0.0005;
+      //  }
+
+        // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
+        double temp = 0.0003;
+        for(int i=0;i<2;i++){
+            MarkerOptions newMarkerOptions = new MarkerOptions();
+            newMarkerOptions.position(new LatLng(location.getLatitude()-temp,location.getLongitude()+0.0005));
+            newMarkerOptions.title("자판기");
+            newMarkerOptions.snippet("으엑 펩시가 있어요");
+            mGoogleMap.addMarker(newMarkerOptions);
+            temp = -0.0006;
         }
+        MarkerOptions newMarkerOptions = new MarkerOptions();
+        newMarkerOptions.position(new LatLng(location.getLatitude()-0.0001,location.getLongitude()+0.0001));
+        newMarkerOptions.title("자판기");
+        newMarkerOptions.snippet("무려 콜라를 팝니다.");
+        mGoogleMap.addMarker(newMarkerOptions);
+
 
 
     }

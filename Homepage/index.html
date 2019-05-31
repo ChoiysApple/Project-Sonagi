@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Sonagi</title>
-    <script type="text/javascript" src="../../docs/js/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="../../docs/js/base.js"></script>
-    <script type="text/javascript" src="../../docs/js/highlight.min.js"></script>
+    <script  src="jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript" src="highlight.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=adkuitdhp5"></script>
-    <script src="main.js">
-    </script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=adkuitdhp5&amp;submodules=panorama,geocoder,drawing,visualization"></script>
+    <script src="main.js"></script>
+    <script src="index.js"></script>
 
 </head>
 <body>
@@ -19,7 +19,7 @@
         <table id="head_nav">
             <tr>
                 <td>
-                    <div id="head_nav_icon">Sonagi</div>
+                    <div id="head_nav_icon"><b>Sonagi</b></div>
                 </td>
                 <td>
                     <div id="head_nav_icon" onclick="head_nav('f')">Find</div>
@@ -39,8 +39,8 @@
     </div>
     <div id="map">
         <div class="search" style> 
-            <input id="address" type="text" placeholder="검색할 주소" value="성남"/>
-            <input id="submit" type="button" value="주소 검색"/>
+            <input id="address" type="text" placeholder="�??��?�� 주소" value="?��?��"/>
+            <input id="submit" type="button" value="주소 �??��"/>
         </div>
     </div>
 
@@ -92,14 +92,14 @@ function searchCoordinateToAddress(latlng) {
         for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
             item = items[i];
             address = makeAddress(item) || '';
-            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
+            addrType = item.name === 'roadaddr' ? '[?��로명 주소]' : '[�?�? 주소]';
 
             htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
         }
 
         infoWindow.setContent([
             '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+            '<h4 style="margin-top:5px;">�??�� 좌표</h4><br />',
             htmlAddresses.join('<br />'),
             '</div>'
         ].join('\n'));
@@ -125,20 +125,20 @@ function searchAddressToCoordinate(address) {
             point = new naver.maps.Point(item.x, item.y);
 
         if (item.roadAddress) {
-            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+            htmlAddresses.push('[?��로명 주소] ' + item.roadAddress);
         }
 
         if (item.jibunAddress) {
-            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+            htmlAddresses.push('[�?�? 주소] ' + item.jibunAddress);
         }
 
         if (item.englishAddress) {
-            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+            htmlAddresses.push('[?��문명 주소] ' + item.englishAddress);
         }
 
         infoWindow.setContent([
             '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
+            '<h4 style="margin-top:5px;">�??�� 주소 : '+ address +'</h4><br />',
             htmlAddresses.join('<br />'),
             '</div>'
         ].join('\n'));
@@ -167,7 +167,11 @@ function initGeocoder() {
         searchAddressToCoordinate($('#address').val());
     });
 
-    searchAddressToCoordinate('정자동 178-1');
+<<<<<<< HEAD
+    searchAddressToCoordinate('?��?��?�� 178-1');
+=======
+    searchAddressToCoordinate('경기도 성남시 수정구 성남대로 1342');
+>>>>>>> dd3e6a65e9be2c13d46a6aa5aa3ca0583b7bdb51
 }
 
 function makeAddress(item) {
@@ -201,7 +205,7 @@ function makeAddress(item) {
     if (land) {
         if (hasData(land.number1)) {
             if (hasData(land.type) && land.type === '2') {
-                rest += '산';
+                rest += '?��';
             }
 
             rest += land.number1;
@@ -212,7 +216,7 @@ function makeAddress(item) {
         }
 
         if (isRoadAddress === true) {
-            if (checkLastString(dongmyun, '면')) {
+            if (checkLastString(dongmyun, '�?')) {
                 ri = land.name;
             } else {
                 dongmyun = land.name;
