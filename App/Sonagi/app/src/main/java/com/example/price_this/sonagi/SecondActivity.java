@@ -1,9 +1,13 @@
 package com.example.price_this.sonagi;
 
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.RadioGroup;
+import android.widget.RadioButton;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,14 +19,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -45,12 +47,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements OnMapReadyCallback,
+
+public class SecondActivity extends AppCompatActivity  implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
 
     private GoogleApiClient mGoogleApiClient = null;
     private GoogleMap mGoogleMap = null;
@@ -69,27 +70,25 @@ public class MainActivity extends AppCompatActivity
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
     LatLng currentPosition;
-    boolean bandingMachine = true;
-    LatLng firstLocation;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
             .setInterval(UPDATE_INTERVAL_MS)
             .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
+    RadioButton toilet;
+    RadioButton trashCan;
+    RadioButton vending;
+    RadioGroup radioGroup;
+
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_main);
-
-
-        Log.d(TAG, "onCreate");
-        mActivity = this;
-
+        setContentView(R.layout.activity_second);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -98,25 +97,20 @@ public class MainActivity extends AppCompatActivity
                 .build();
 
 
-        final Context context;
-        context=this;
         MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapAdd);
         mapFragment.getMapAsync(this);
 
-        FloatingActionButton fab;
-        fab=findViewById(R.id.fab);
-        fab.setOnClickListener(new FloatingActionButton.OnClickListener(){
-            @Override
-            public void onClick(View view){
+        toilet = (RadioButton) findViewById(R.id.radioToilet);
+        trashCan = (RadioButton) findViewById(R.id.radioTrash);
+        vending = (RadioButton) findViewById(R.id.radioVending);
+        radioGroup = (RadioGroup) findViewById(R.id.category);
 
-                Intent regiIntent= new Intent(context, SecondActivity.class);
-                startActivity(regiIntent);
-            }
-
-        });
+        int radioId = radioGroup.getCheckedRadioButtonId();
+        if (toilet.getId() == radioId) name = "화장실";
+        else if (trashCan.getId() == radioId) name = "쓰레기통";
+        else if (vending.isChecked()) name = "자판기";
     }
-
 
     @Override
     public void onResume() {
@@ -238,8 +232,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
     }
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -409,7 +403,7 @@ public class MainActivity extends AppCompatActivity
         markerOptions.draggable(true);
 
 
-        //currentMarker = mGoogleMap.addMarker(markerOptions);
+        currentMarker = mGoogleMap.addMarker(markerOptions);
 
 
         if ( mMoveMapByAPI ) {
@@ -420,48 +414,6 @@ public class MainActivity extends AppCompatActivity
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
             mGoogleMap.moveCamera(cameraUpdate);
         }
-
-        //double Ladjust=(-0.0005);
-       // double Oadjust=(-0.0005);
-
-
-      //  for(int i=0;i<3;i++){
-       //     for(int j=0;j<3;j++){
-       //         MarkerOptions newMarkerOptions = new MarkerOptions();
-        //        newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
-        //        mGoogleMap.addMarker(newMarkerOptions);
-        //        Ladjust+=0.0005;
-        //    }
-        //    Ladjust=-0.0005;
-        //    Oadjust+=0.0005;
-      //  }
-
-
-
-        // 여기부터는 위치에 기반한 마커를 놓기 위해 하드 코딩을 합니다.
-        if(bandingMachine) {
-            firstLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            double temp = 0.0003;
-            for (int i = 0; i < 2; i++) {
-                MarkerOptions newMarkerOptions = new MarkerOptions();
-                newMarkerOptions.position(new LatLng(location.getLatitude() - temp, location.getLongitude() + 0.0005));
-                newMarkerOptions.title("자판기");
-                newMarkerOptions.snippet("으엑 펩시가 있어요");
-                mGoogleMap.addMarker(newMarkerOptions);
-                temp = -0.0006;
-            }
-            MarkerOptions newMarkerOptions = new MarkerOptions();
-            newMarkerOptions.position(new LatLng(location.getLatitude() - 0.0001, location.getLongitude() + 0.0001));
-            newMarkerOptions.title("자판기");
-            newMarkerOptions.snippet("무려 콜라를 팝니다.");
-            mGoogleMap.addMarker(newMarkerOptions);
-            bandingMachine = false;
-        }
-
-        if((firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)>=0.0000002&&(firstLocation.latitude*currentLatLng.latitude)-(firstLocation.longitude*currentLatLng.longitude)<=0.0000002){
-            bandingMachine=true;
-        }
-
     }
 
 
@@ -554,7 +506,7 @@ public class MainActivity extends AppCompatActivity
     @TargetApi(Build.VERSION_CODES.M)
     private void showDialogForPermission(String msg) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
         builder.setTitle("알림");
         builder.setMessage(msg);
         builder.setCancelable(false);
@@ -576,7 +528,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showDialogForPermissionSetting(String msg) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
         builder.setTitle("알림");
         builder.setMessage(msg);
         builder.setCancelable(true);
@@ -604,7 +556,7 @@ public class MainActivity extends AppCompatActivity
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");
@@ -656,7 +608,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
+
 }
-
-
-
