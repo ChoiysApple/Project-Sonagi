@@ -19,7 +19,7 @@
         <table id="head_nav">
             <tr>
                 <td>
-                    <div id="head_nav_icon">Sonagi</div>
+                    <div id="head_nav_icon"><b>Sonagi</b></div>
                 </td>
                 <td>
                     <div id="head_nav_icon" onclick="head_nav('f')">Find</div>
@@ -39,8 +39,8 @@
     </div>
     <div id="map">
         <div class="search" style> 
-            <input id="address" type="text" placeholder="ê²€ìƒ‰í•  ì£¼ì†Œ" value="ì„±ë‚¨"/>
-            <input id="submit" type="button" value="ì£¼ì†Œ ê²€ìƒ‰"/>
+            <input id="address" type="text" placeholder="ê²??ƒ‰?•  ì£¼ì†Œ" value="?„±?‚¨"/>
+            <input id="submit" type="button" value="ì£¼ì†Œ ê²??ƒ‰"/>
         </div>
     </div>
 
@@ -92,14 +92,14 @@ function searchCoordinateToAddress(latlng) {
         for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
             item = items[i];
             address = makeAddress(item) || '';
-            addrType = item.name === 'roadaddr' ? '[ë„ë¡œëª… ì£¼ì†Œ]' : '[ì§€ë²ˆ ì£¼ì†Œ]';
+            addrType = item.name === 'roadaddr' ? '[?„ë¡œëª… ì£¼ì†Œ]' : '[ì§?ë²? ì£¼ì†Œ]';
 
             htmlAddresses.push((i+1) +'. '+ addrType +' '+ address);
         }
 
         infoWindow.setContent([
             '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">ê²€ìƒ‰ ì¢Œí‘œ</h4><br />',
+            '<h4 style="margin-top:5px;">ê²??ƒ‰ ì¢Œí‘œ</h4><br />',
             htmlAddresses.join('<br />'),
             '</div>'
         ].join('\n'));
@@ -125,20 +125,20 @@ function searchAddressToCoordinate(address) {
             point = new naver.maps.Point(item.x, item.y);
 
         if (item.roadAddress) {
-            htmlAddresses.push('[ë„ë¡œëª… ì£¼ì†Œ] ' + item.roadAddress);
+            htmlAddresses.push('[?„ë¡œëª… ì£¼ì†Œ] ' + item.roadAddress);
         }
 
         if (item.jibunAddress) {
-            htmlAddresses.push('[ì§€ë²ˆ ì£¼ì†Œ] ' + item.jibunAddress);
+            htmlAddresses.push('[ì§?ë²? ì£¼ì†Œ] ' + item.jibunAddress);
         }
 
         if (item.englishAddress) {
-            htmlAddresses.push('[ì˜ë¬¸ëª… ì£¼ì†Œ] ' + item.englishAddress);
+            htmlAddresses.push('[?˜ë¬¸ëª… ì£¼ì†Œ] ' + item.englishAddress);
         }
 
         infoWindow.setContent([
             '<div style="padding:10px;min-width:200px;line-height:150%;">',
-            '<h4 style="margin-top:5px;">ê²€ìƒ‰ ì£¼ì†Œ : '+ address +'</h4><br />',
+            '<h4 style="margin-top:5px;">ê²??ƒ‰ ì£¼ì†Œ : '+ address +'</h4><br />',
             htmlAddresses.join('<br />'),
             '</div>'
         ].join('\n'));
@@ -167,7 +167,7 @@ function initGeocoder() {
         searchAddressToCoordinate($('#address').val());
     });
 
-    searchAddressToCoordinate('ì •ìë™ 178-1');
+    searchAddressToCoordinate('? •??™ 178-1');
 }
 
 function makeAddress(item) {
@@ -201,7 +201,7 @@ function makeAddress(item) {
     if (land) {
         if (hasData(land.number1)) {
             if (hasData(land.type) && land.type === '2') {
-                rest += 'ì‚°';
+                rest += '?‚°';
             }
 
             rest += land.number1;
@@ -212,7 +212,7 @@ function makeAddress(item) {
         }
 
         if (isRoadAddress === true) {
-            if (checkLastString(dongmyun, 'ë©´')) {
+            if (checkLastString(dongmyun, 'ë©?')) {
                 ri = land.name;
             } else {
                 dongmyun = land.name;
