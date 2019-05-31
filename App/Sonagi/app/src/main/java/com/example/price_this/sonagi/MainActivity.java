@@ -404,19 +404,19 @@ public class MainActivity extends AppCompatActivity
             mGoogleMap.moveCamera(cameraUpdate);
         }
 
-        double Ladjust=(-0.00005);
-        double Oadjust=(-0.00005);
+        double Ladjust=(-0.0005);
+        double Oadjust=(-0.0005);
 
 
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
                 MarkerOptions newMarkerOptions = new MarkerOptions();
                 newMarkerOptions.position(new LatLng(location.getLatitude()+Ladjust,location.getLongitude()+Oadjust));
                 mGoogleMap.addMarker(newMarkerOptions);
-                Ladjust+=0.00001;
+                Ladjust+=0.0005;
             }
-            Ladjust=-0.00005;
-            Oadjust+=0.00001;
+            Ladjust=-0.0005;
+            Oadjust+=0.0005;
         }
 
 
