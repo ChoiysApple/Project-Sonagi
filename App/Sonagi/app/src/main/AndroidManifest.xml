@@ -17,9 +17,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.naver.maps.map.adkuitdhp5"
-            android:value="adkuitdhp5" />
     </application>
 
 </manifest>
